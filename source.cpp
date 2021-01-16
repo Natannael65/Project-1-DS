@@ -14,11 +14,15 @@ User *createUser(const char *name, const char *pass) {
     User *newUser = (User*)malloc(sizeof(User));
     strcpy(newUser->name, name);
     strcpy(newUser->pass, pass);
+     newUser->prev = NULL;
+    newUser->next = NULL;
     return newUser;
+
 }
 
 void pushHead(const char *name,const char *pass) {
     User *temp = createUser(name,pass);
+    
 
     if (!head) {
         head = tail = temp;
@@ -27,6 +31,7 @@ void pushHead(const char *name,const char *pass) {
         temp->next = head;
         head = temp;
     }
+   
 }
 
 void printListNameMenu() {
