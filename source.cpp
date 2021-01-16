@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "auth.cpp"
 
 
 struct User {   //doubly linked list buat data user
@@ -95,6 +96,7 @@ bool exitCommand() {
 }
 
 int main() {
+
     int menus;
     bool repeat = true;
     while (repeat) {
