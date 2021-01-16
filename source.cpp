@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 
+
 struct User {   //doubly linked list buat data user
     char name[255];
     char pass[255];
@@ -16,6 +17,30 @@ User *createUser(const char *name, const char *pass) {
     return newUser;
 }
 
+void pushHead(const char *name,const char *pass) {
+    User *temp = createUser(name,pass);
+
+    if (!head) {
+        head = tail = temp;
+    }else {
+        head->prev = temp;
+        temp->next = head;
+        head = temp;
+    }
+}
+
+void printListNameMenu() {
+    User *curr = head;
+    int nomor = 1;
+    while(curr) {
+        printf("%d.    %s\n",nomor,curr->name);
+        curr = curr-> next;
+        nomor++;
+    }
+    printf("NULL\n");
+}
+
+
 void mainMenu() {
     printf("Oo=====================================oO\n");
     printf("               STUDY NETWORK                \n");
@@ -23,7 +48,7 @@ void mainMenu() {
     printf("\n");
     printf("[All User]\n");
     printf("No.   Username\n");
-    // data user
+    printListNameMenu();    //data user
     printf("-----------------------------------------\n");
     printf("[1] Register\n");
     printf("[2] Login\n");
@@ -35,9 +60,21 @@ void mainMenu() {
 }
 
 void registermenu(){
+    char namaUser[255];
+    char passUser[255];
     printf("-----------------------------------------\n");
-
-    return;
+    printf("Please type in your username [lowercase||1..24]:");
+    scanf("%[^\n]",namaUser);
+    getchar();
+    printf("Please type in your password [lowercase||1..24]:");
+    scanf("%[^\n]",passUser);
+    getchar();
+    
+    pushHead(namaUser,passUser);
+    printf("---Registration Successfull---\n");
+    printf("Press enter to continue\n");
+    
+    getchar();
 }
 
 void loginmenu() {
@@ -48,16 +85,15 @@ bool exitCommand() {
     return false;
 }
 
+
+
 int main() {
-    // data user tampung di file txt
-    // save pas keluar
     int menus;
     bool repeat = true;
-    
     while (repeat) {
         system("cls");
         mainMenu();
-        scanf("%d",&menus);
+        scanf("%d",&menus);getchar();
         switch(menus) {
             case 0: break;
             case 1: registermenu(); break;
