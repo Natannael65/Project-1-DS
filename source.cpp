@@ -82,7 +82,9 @@ void registermenu(){
     getchar();
 }
 
-void loginmenu() {
+
+    
+   void loginmenu() {
     char inputUser[255];    //inputan username
     char inputPass[255];    //inputan password
     char placeHolder[255];
@@ -90,14 +92,47 @@ void loginmenu() {
     printf("Username: ");
     scanf("%[^\n]",inputUser);
     getchar();
+   
 
     puts("Password: ");
     scanf("%[^\n]",inputPass);
     getchar();
+    bool accepted = false;     //kalo berhasil pass sama user sama
+    
+    User *curr = head;
+    while(curr){
+        if(strcmp(curr->name,inputUser)==0 && strcmp(curr->pass,inputPass)==0){
+            accepted =  true;
+            break;
+        }else if(strcmp(curr->name,inputUser)!=0 && strcmp(curr->pass,inputPass)==0){
+            accepted=false;
+            break;
+        }else if(strcmp(curr->name,inputUser)==0 && strcmp(curr->pass,inputPass)!=0){
+            accepted = false;
+            break;
+        }else{
+            accepted = false;
+            break;
+        }
+    }
+    if (accepted == true) {
+         printf("--- Login Successfull ---\n");
+         printf("Press enter to continue\n");
+        getchar();
+        return;
+    }else if(accepted == false) {
+        printf("--- Data Not Registered ---\n");
+        printf("Press enter to continue\n");
+        getchar();
+        return;
+    }
+    
 }
+
 bool exitCommand() {
     return false;
 }
+
 
 int main() {
     int menus;
