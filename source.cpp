@@ -14,12 +14,12 @@ User *createUser(const char *name, const char *pass) {
     User *newUser = (User*)malloc(sizeof(User));
     strcpy(newUser->name, name);
     strcpy(newUser->pass, pass);
+    newUser->next = newUser->prev = NULL;
     return newUser;
 }
 
 void pushHead(const char *name,const char *pass) {
     User *temp = createUser(name,pass);
-
     if (!head) {
         head = tail = temp;
     }else {
@@ -33,7 +33,7 @@ void printListNameMenu() {
     User *curr = head;
     int nomor = 1;
     while(curr) {
-        printf("%d.    %s\n",nomor,curr->name);
+        printf("%d.\t%s\n",nomor,curr->name);
         curr = curr-> next;
         nomor++;
     }
@@ -56,7 +56,7 @@ void mainMenu() {
     printf("-----------------------------------------\n");
     printf(" Press 0 and enter to abort an operation\n");
     printf("-----------------------------------------\n");
-    printf(">>");
+    printf(">> ");
 }
 
 void registermenu(){
@@ -64,10 +64,10 @@ void registermenu(){
     char passUser[255];
     printf("-----------------------------------------\n");
     printf("Please type in your username [lowercase||1..24]:");
-    scanf("%[^\n]",namaUser);
+    scanf("%s",namaUser);
     getchar();
     printf("Please type in your password [lowercase||1..24]:");
-    scanf("%[^\n]",passUser);
+    scanf("%s",passUser);
     getchar();
     
     pushHead(namaUser,passUser);
@@ -80,7 +80,7 @@ void registermenu(){
 void loginmenu() {
     char inputUser[255];    //inputan username
     char inputPass[255];    //inputan password
-    char placeHolder[255];
+
     printf("-----------------------------------------\n");
     printf("Username: ");
     scanf("%[^\n]",inputUser);
