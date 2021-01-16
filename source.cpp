@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "auth.cpp"
+
 
 
 struct User {   //doubly linked list buat data user
@@ -47,7 +47,7 @@ void printListNameMenu() {
 }
 
 
-void mainMenu() {
+void mainPage() {
     printf("Oo=====================================oO\n");
     printf("               STUDY NETWORK                \n");
     printf("Oo=====================================oO\n");
@@ -83,9 +83,17 @@ void registermenu(){
     getchar();
 }
 
+void loginPage() {
+    printf("Oo=====================================oO\n");
+    printf("Welcome, %s\n");
+    printf("Oo=====================================oO\n");
 
+
+
+
+}
     
-   void loginmenu() {
+bool loginmenu() {
     char inputUser[255];    //inputan username
     char inputPass[255];    //inputan password
 
@@ -103,10 +111,10 @@ void registermenu(){
     User *curr = head;
     while(curr){
         if(strcmp(curr->name,inputUser)==0 && strcmp(curr->pass,inputPass)==0){
-            accepted =  true;
+            accepted = true;
             break;
         }else if(strcmp(curr->name,inputUser)!=0 && strcmp(curr->pass,inputPass)==0){
-            accepted=false;
+            accepted = false;
             break;
         }else if(strcmp(curr->name,inputUser)==0 && strcmp(curr->pass,inputPass)!=0){
             accepted = false;
@@ -117,17 +125,16 @@ void registermenu(){
         }
     }
     if (accepted == true) {
-         printf("--- Login Successfull ---\n");
-         printf("Press enter to continue\n");
+        printf("--- Login Successfull ---\n");
+        printf("Press enter to continue\n");
         getchar();
-        return;
+        return true;
     }else if(accepted == false) {
         printf("--- Data Not Registered ---\n");
         printf("Press enter to continue\n");
         getchar();
-        return;
+        return false;
     }
-    
 }
 
 bool exitCommand() {
@@ -136,20 +143,39 @@ bool exitCommand() {
 
 
 int main() {
-
     int menus;
+    bool acc = false;
     bool repeat = true;
     while (repeat) {
         system("cls");
-        mainMenu();
-        scanf("%d",&menus);getchar();
-        switch(menus) {
-            case 0: break;
-            case 1: registermenu(); break;
-            case 2: loginmenu(); break;
-            case 3: repeat = exitCommand(); break;
-            default: printf("Menu tidak tersedia\n"); break;
+        if (acc == false) {
+            mainPage();
+            scanf("%d",&menus);getchar();
+            switch(menus) {
+                case 0: break;
+                case 1: registermenu(); break;
+                case 2: acc = loginmenu(); break;
+                case 3: repeat = exitCommand(); break;
+                default: printf("Menu tidak tersedia\n"); break;
+            } 
+        } else {
+            loginPage();    // liat function login page buat menu yang Add Friend
+            scanf("%d",&menus);getchar();
+            switch(menus) {
+                case 0: break;
+                case 1: //AddFriend();break;
+                case 2: //removeFriend();break;
+                case 3: //ViewInbox();break;
+                case 4: //ViewSentRequest();break;
+                case 5: //AddEditAnnounceDelete();break;
+                case 6: //LogOut
+                default: printf("Menu tidak tersedia\n");break;
+            }
         }
+        
+        
+        
+        
     }
     
     return 0;
