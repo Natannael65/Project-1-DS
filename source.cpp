@@ -78,14 +78,21 @@ void registermenu(){
 }
 
 void loginmenu() {
-    //login
-    return;
+    char inputUser[255];    //inputan username
+    char inputPass[255];    //inputan password
+    char placeHolder[255];
+    printf("-----------------------------------------\n");
+    printf("Username: ");
+    scanf("%[^\n]",inputUser);
+    getchar();
+
+    puts("Password: ");
+    scanf("%[^\n]",inputPass);
+    getchar();
 }
 bool exitCommand() {
     return false;
 }
-
-
 
 int main() {
     int menus;
