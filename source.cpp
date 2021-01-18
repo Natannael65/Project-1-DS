@@ -209,8 +209,124 @@ bool ViewSentRequest(){
 	}
 }
 
-void AddEditAnnounceDelete(){
-	
+///ini func buat public dashboard
+struct nameNode {
+  char nama[257];
+  char comment[257];
+  nameNode*next; // node's next pointer
+} *ahead[256], *atail[256]; // global head and tail
+
+nameNode *createNode(char*nama, char*comment) {
+  // allocate memory with size of Node and cast it to Node*
+  nameNode *newNode = (nameNode*)malloc(sizeof(nameNode)); 
+  strcpy(newNode->comment,comment );
+  strcpy(newNode->nama,nama ); // fill in the value
+  newNode->next = NULL; // next node is null
+  return newNode;
+}
+
+void NewPushHead(char*nama, char*comment, int i) {
+  nameNode *temp = createNode(nama, comment); // create new node
+
+  if(!ahead[i]) { // if there's no head (0 node)
+    ahead[i] = atail[i] = temp; // node is the first and last
+  } else { // >= 1 node
+    temp->next = ahead[i]; // node points to head
+    ahead[i] = temp; // node becomes head
+  }
+}
+
+void NewPushTail(char*nama, char*comment, int i) {
+ nameNode *temp = createNode(nama, comment);
+
+  if(!ahead[i]) { // empty list
+    ahead[i] = atail[i] = temp; // temp (head dan tail)
+  } else { // A (tail), insert B
+    atail[i]->next = temp; // A (tail) -> B (temp)
+    atail[i] = temp; // A -> B (tail, temp)
+  }
+}
+
+void NewPrintLinkedList(int i) {
+ nameNode *curr = ahead[i]; // set current node to head
+  int j=0;
+                                          
+  while(curr){ // while there is still curr
+    if(j==0)
+    printf("%s Noted :\n\"%s\"\n====================\n", curr->nama, curr->comment);
+    else
+    printf("%s Commented:\n\"%s\"\n====================\n", curr->nama, curr->comment);
+    curr = curr->next; // move to the next node
+    j++;
+  }
+  printf("\n\n\n");
+  getchar();
+}
+
+void printHead(int j){
+    for(int i=0; i<j; i++)
+    {
+        printf("%d. %s\n--------------------\n",i,ahead[i]->comment);
+    }
+}
+
+void AddEditAnnounceDelete(){//recover deleted notes belom di buat
+    int select, j=0;
+    do
+    {
+        printf("Public dashboard:\n1. See notes\n2. Post notes\n3. Recover deleted notes\n4. Comment\n5. Out\n");
+        printf("========================\nSelect action:\n");
+        scanf("%d",&select);
+        getchar();
+
+        if(select == 1)
+        {
+            int m;
+            printf("====================\nList of notes:\n");
+            printHead(j);
+            printf("====================\nWhich notes?\n");
+            scanf("%d",&m);
+            NewPrintLinkedList(m);
+            printf("====================\n\n\n");
+        }
+        else if(select ==2)
+        {
+            char m[257];
+            char com[257];
+            
+            printf("====================\nSiapa nama anda?\n");
+            scanf("%[^\n]",m);
+            getchar();
+            printf("\n");
+            printf("====================\nSilahkan isi notesnya:\n");
+            scanf("%[^\n]",com);
+            getchar();
+            printf("\n");
+            NewPushTail(m,com,j);j++;
+            printf("====================\n\n\n");
+        }
+        else if(select == 3)
+        {
+
+        }
+        else if(select == 4)
+        {
+            int n=0;
+            char com[257],m[257];
+            printf("====================\nWhich?\n");
+            printHead(j);
+            scanf("%d",&n);
+            getchar();
+            printf("====================\nSiapa nama anda?\n");
+            scanf("%[^\n]",m);
+            getchar();
+            printf("====================\nSilahkan komen:\n");
+            scanf("%[^\n]",com);
+            getchar();
+            NewPushTail(m,com,n);
+           printf("====================\n\n\n");
+        }
+    }while(select!=5);
 }
 
 void printFriendList() {
